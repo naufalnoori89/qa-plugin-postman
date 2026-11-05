@@ -1,0 +1,22 @@
+{
+  "id": "qa-environment",
+  "name": "QA Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "https://qa.example.com",
+      "enabled": true
+    },
+    {
+      "key": "api_version",
+      "value": "v1",
+      "enabled": true
+    },
+    {
+      "key": "timeout",
+      "value": "10000",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

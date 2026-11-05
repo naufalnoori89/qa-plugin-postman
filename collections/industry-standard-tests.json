@@ -1,0 +1,280 @@
+{
+  "info": {
+    "name": "Industry Standard API Tests",
+    "_postman_id": "industry-standard-001",
+    "description": "Industry-standard API test collection using Postman Echo for GET, POST, DELETE operations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET - Retrieve Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Standard GET request validation",
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response time is less than 2000ms', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test('Response has valid JSON', function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test('Response contains args object', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('args');",
+              "});",
+              "",
+              "pm.test('Query parameters are echoed correctly', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.args).to.have.property('testParam');",
+              "    pm.expect(jsonData.args.testParam).to.eql('testValue');",
+              "});",
+              "",
+              "pm.test('Response contains headers object', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('headers');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://postman-echo.com/get?testParam=testValue&foo=bar",
+          "protocol": "https",
+          "host": ["postman-echo", "com"],
+          "path": ["get"],
+          "query": [
+            {
+              "key": "testParam",
+              "value": "testValue"
+            },
+            {
+              "key": "foo",
+              "value": "bar"
+            }
+          ]
+        },
+        "description": "Retrieve data using GET request - Postman Echo returns the request details"
+      },
+      "response": []
+    },
+    {
+      "name": "POST - Create Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Standard POST request validation",
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has valid JSON', function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test('Posted data is echoed back', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('data');",
+              "});",
+              "",
+              "pm.test('Request body data is correct', function () {",
+              "    var jsonData = pm.response.json();",
+              "    var sentData = JSON.parse(jsonData.data);",
+              "    pm.expect(sentData.name).to.eql('Test User');",
+              "    pm.expect(sentData.email).to.eql('testuser@example.com');",
+              "});",
+              "",
+              "pm.test('Content-Type header is present', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.headers).to.have.property('content-type');",
+              "});",
+              "",
+              "pm.test('Response contains request URL', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('url');",
+              "    pm.expect(jsonData.url).to.include('postman-echo.com');",
+              "});",
+              "",
+              "// Store data for DELETE request",
+              "pm.environment.set('test_user_name', 'Test User');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"testuser@example.com\",\n  \"role\": \"tester\",\n  \"department\": \"QA\"\n}"
+        },
+        "url": {
+          "raw": "https://postman-echo.com/post",
+          "protocol": "https",
+          "host": ["postman-echo", "com"],
+          "path": ["post"]
+        },
+        "description": "Create data using POST request - Postman Echo echoes back the posted data"
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE - Remove Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Standard DELETE request validation",
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response time is less than 2000ms', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test('Response has valid JSON', function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test('Delete request URL is correct', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('url');",
+              "    pm.expect(jsonData.url).to.include('postman-echo.com/delete');",
+              "});",
+              "",
+              "pm.test('Request headers are echoed', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('headers');",
+              "});",
+              "",
+              "pm.test('No error in response', function () {",
+              "    pm.response.to.not.be.error;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Delete-Reason",
+            "value": "Test cleanup"
+          }
+        ],
+        "url": {
+          "raw": "https://postman-echo.com/delete?name={{test_user_name}}",
+          "protocol": "https",
+          "host": ["postman-echo", "com"],
+          "path": ["delete"],
+          "query": [
+            {
+              "key": "name",
+              "value": "{{test_user_name}}",
+              "description": "Name of resource to delete"
+            }
+          ]
+        },
+        "description": "Delete data using DELETE request - Postman Echo confirms the request details"
+      },
+      "response": []
+    },
+    {
+      "name": "BONUS - PUT - Update Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Standard PUT request validation",
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has valid JSON', function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test('Updated data is echoed back', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('data');",
+              "    var sentData = JSON.parse(jsonData.data);",
+              "    pm.expect(sentData.status).to.eql('updated');",
+              "});",
+              "",
+              "pm.test('Request method is PUT', function () {",
+              "    var jsonData = pm.response.json();",
+              "    // Note: Postman Echo may not return the method, check headers instead",
+              "    pm.expect(jsonData).to.have.property('url');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 123,\n  \"name\": \"Updated User\",\n  \"status\": \"updated\"\n}"
+        },
+        "url": {
+          "raw": "https://postman-echo.com/put",
+          "protocol": "https",
+          "host": ["postman-echo", "com"],
+          "path": ["put"]
+        },
+        "description": "Update data using PUT request - Bonus industry standard test"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://postman-echo.com",
+      "type": "string"
+    }
+  ]
+}

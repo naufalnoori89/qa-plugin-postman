@@ -1,0 +1,21 @@
+{
+  "name": "qa-plugin-postman",
+  "version": "1.0.0",
+  "description": "Postman/Newman plugin for AI QA Agent",
+  "main": "index.js",
+  "scripts": {
+    "test": "newman run collections/industry-standard-tests.json"
+  },
+  "keywords": [
+    "postman",
+    "newman",
+    "api-testing",
+    "qa-automation"
+  ],
+  "dependencies": {
+    "newman": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

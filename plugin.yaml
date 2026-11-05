@@ -1,0 +1,30 @@
+name: postman
+version: 1.0.0
+framework: newman
+description: Postman API automation framework for testing REST APIs
+
+capabilities:
+  - discover_suites
+  - create_tests
+  - modify_tests
+  - run_tests
+  - analyze_results
+
+runtime:
+  type: node
+  version: "22"
+
+execution:
+  provider: jenkins
+  job_key: postman
+
+knowledge_base:
+  enabled: true
+  sources:
+    - knowledge/
+    - collections/
+    - schemas/
+    - README.md
+
+author: QA Team
+repository: qa-plugin-postman
